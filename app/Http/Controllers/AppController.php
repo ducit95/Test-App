@@ -77,12 +77,7 @@ class AppController extends Controller
      */
     public function show()
     {
-        $avatar = Avatar::all();
-        foreach ($avatar as $key => $value) {
-          $idavatar = $value->id;
-        }
-        $data['id']= $idavatar+1;
-        Avatar::where('id', $idavatar)->update($data);
+        
     }
 
     /**
