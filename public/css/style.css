@@ -1,0 +1,21 @@
+.main {
+  margin-top: 2%;
+  margin-bottom: 2%; }
+
+.list-user .create-new-user {
+  margin-bottom: 2%; }
+.list-user .avatar {
+  text-align: center; }
+  .list-user .avatar img {
+    width: 32px;
+    height: 32px; }
+
+.create-new-user {
+  margin-bottom: 2%; }
+
+.edit-user {
+  margin-bottom: 2%; }
+  .edit-user img {
+    width: 100%; }
+
+/*# sourceMappingURL=style.css.map */
