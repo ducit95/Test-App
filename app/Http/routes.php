@@ -12,12 +12,3 @@
 */
 
 
-
-Route::get('/', function () {
-    return view('index');
-});
-Route::get('getdata', 'AppController@index');
-Route::get('detele/{id}', 'AppController@destroy');
-Route::get('getdatauser/{id}', 'AppController@store');
-Route::post('update/{id}', 'AppController@update');
-Route::post('create', 'AppController@create');
