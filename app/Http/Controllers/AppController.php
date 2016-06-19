@@ -132,6 +132,9 @@ class AppController extends Controller
     public function destroy($id)
     {
         $users = Model_test_app_user::find($id);
-        $users->delete();
+        if ($users!=null) {
+            $users->delete();
+        }
+       
     }
 }
