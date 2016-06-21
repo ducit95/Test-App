@@ -36,7 +36,7 @@ class UserTest extends TestCase
           'age' => '50'
         ]);
         $this->assertRedirectedToAction('AppController@create');
-        
+        $this->seeInDatabase('test_app_user', ['name' => 'Duc Nguyen']);
     }
     public function invalid_name()
     {
