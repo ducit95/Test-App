@@ -12,39 +12,109 @@ class UserTest extends TestCase
      * @return void
      */
     public function testExample()
+      {
+        $this->assertTrue(true);
+      }
+    public function testIndex()
     {
         $response = $this->call('GET', '/');
-
-    	$this->assertEquals(200, $response->status());
-    }
-     public function testGedata()
-    {
-        $response = $this->call('GET', 'getdata');
-
-    	$this->assertEquals(200, $response->status());
-    }
-    public function testDetele()
-    {
-        $response = $this->call('GET', 'detele/10');
-
-    	$this->assertEquals(200, $response->status());
+        $this->see('LIst User');
+        $this->assertEquals(200, $response->status());
+        $this->assertResponseOk();
     }
     public function testDatauser()
     {
-        $response = $this->call('GET', 'getdatauser/11');
-
-    	$this->assertEquals(200, $response->status());
+        $response = $this->call('GET', 'getdatauser/id');
+        $this->assertResponseOk();
+        $this->assertResponseStatus(200);
     }
-    public function testUpdate()
+    public function valid_user()
     {
-        $response = $this->call('POST', 'update/11',['name' => 'Taylor','address' =>'HA NOI','age'=>9]);
-
-    	$this->assertEquals(200, $response->status());
+        $response = $this->call('POST', 'create', [
+          'name' => 'Duc Nguyen',
+          'address' => 'Ha Noi',
+          'age' => '50'
+        ]);
+        $this->assertRedirectedToAction('AppController@create');
+        $this->seeInDatabase('test_app_user', ['name' => 'Duc Nguyen']);
     }
-    public function testCreate()
+    public function invalid_name()
     {
-        $response = $this->call('POST', 'create',['name' => 'Taylor','address' =>'HA NOI','age'=>6]);
-
-    	$this->assertEquals(200, $response->status());
+        $response = $this->call('POST', '/create', [
+          'name' => '',
+          'address' => 'hanoi',
+          'age' => '92'
+        ]);
+        $this->assertFalse(false);
+    }
+    public function invalid_address()
+    {
+        $response = $this->call('POST', '/create', [
+          'name' => 'Duc Nguyen',
+          'address' => '',
+          'age' => '92'
+        ]);
+        $this->assertFalse(false);
+    }
+    public function invalid_age()
+    {
+        $response = $this->call('POST', '/create', [
+          'name' => 'Duc Nguyen',
+          'address' => 'hanoi',
+          'age' => ''
+        ]);
+        $this->assertFalse(false);
+    }
+    public function invalid_name_address()
+    {
+        $response = $this->call('POST', '/create', [
+          'name' => '',
+          'address' => '',
+          'age' => '12'
+        ]);
+        $this->assertFalse(false);
+    }
+      public function invalid_age_name()
+    {
+        $response = $this->call('POST', '/create', [
+          'name' => '',
+          'address' => 'Ha Noi',
+          'age' => ''
+        ]);
+        $this->assertFalse(false);
+    }
+      public function invalid_age_address()
+    {
+        $response = $this->call('POST', '/create', [
+          'name' => 'Duc Nguyen',
+          'address' => '',
+          'age' => ''
+        ]);
+        $this->assertFalse(false);
+    }
+     public function invalid_all()
+    {
+        $response = $this->call('POST', '/create', [
+          'name' => '',
+          'address' => '',
+          'age' => ''
+        ]);
+        $this->assertFalse(false);
+    }
+    public function deleteuser()
+    {
+        $response = $this->call('GET', 'detele/123', []);
+        $deleted= DB::table('test_app_user')->where('id', '123')->first();
+        $this->assertRedirectedToAction('AppController@destroy');
+    }
+    public function edit()
+    {
+        $response = $this->call('post', 'update/123', [
+          'name' => 'Duc Nguyen',
+          'address' => 'hanoi',
+          'age' => '92'
+        ]);
+        $updatedname= DB::table('test_app_user')->where('id', '123')->first();
+        $this->assertEquals($updatedname->name, 'Duc Nguyen');
     }
 }
