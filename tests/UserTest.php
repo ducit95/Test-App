@@ -35,7 +35,8 @@ class UserTest extends TestCase
           'address' => 'Ha Noi',
           'age' => '50'
         ]);
-        $this->assertRedirectedToAction('AppController@store');
+        $this->assertRedirectedToAction('AppController@create');
+        
     }
     public function invalid_name()
     {
@@ -60,7 +61,43 @@ class UserTest extends TestCase
         $response = $this->call('POST', '/create', [
           'name' => 'Duc Nguyen',
           'address' => 'hanoi',
-          'age' => '10'
+          'age' => ''
+        ]);
+        $this->assertFalse(false);
+    }
+    public function invalid_name_address()
+    {
+        $response = $this->call('POST', '/create', [
+          'name' => '',
+          'address' => '',
+          'age' => '12'
+        ]);
+        $this->assertFalse(false);
+    }
+      public function invalid_age_name()
+    {
+        $response = $this->call('POST', '/create', [
+          'name' => '',
+          'address' => 'Ha Noi',
+          'age' => ''
+        ]);
+        $this->assertFalse(false);
+    }
+      public function invalid_age_address()
+    {
+        $response = $this->call('POST', '/create', [
+          'name' => 'Duc Nguyen',
+          'address' => '',
+          'age' => ''
+        ]);
+        $this->assertFalse(false);
+    }
+     public function invalid_all()
+    {
+        $response = $this->call('POST', '/create', [
+          'name' => '',
+          'address' => '',
+          'age' => ''
         ]);
         $this->assertFalse(false);
     }
